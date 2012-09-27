@@ -2,3 +2,5 @@ Percentyl95
 
 Program napisany w celu ułatwienia generowania linków w systemie CACTI.
 Określając miesiąc i rok możemy wygenerować nowy zestaw linków dla wszystkich klientów biznesowych.
+
+seeds.rb ustawione w .gitignore
