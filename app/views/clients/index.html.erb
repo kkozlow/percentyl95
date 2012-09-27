@@ -1,0 +1,82 @@
+<h1>Listing clients</h1>
+<h2>for month:  <%=@date.strftime("%B")%></h2>
+<p>
+<%= form_tag :controller => 'change_month', :action => 'create', :method => 'post' do %>
+  <%= select_month(@date) %>
+  <%= select_year(@date, :start_year => 2010, :end_year => 2030) %>
+  <%= submit_tag "Przelicz" %>
+    <% end %>
+</p>
+<% if @future == true %>
+  <h2><center>
+    WOW!    We are in the future!<br/>
+    <%= tag(:img, { :src => "/assets/future.jpeg" }, false) %>
+  </center></h2>
+<% end %>
+<table>
+  <tr>
+    <th style="padding-right:50px">Nazwa klienta, adres, id usługi</th>
+    <th style="padding-right:10px">Commitment [Mbps]</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @clients.each_with_index do |client, index| %>
+  <tr>
+    <td style="padding-right:50px"><%= client.name %></td>
+    <td><%= client.commitment %></td>
+    <td><%= link_to 'Show', client %></td>
+    <td><%= link_to 'Edit', edit_client_path(client) %></td>
+    <td><%= link_to 'Destroy', client, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+  <tr>
+    <td cellspan='6' style="padding-bottom:15px"><%=link_to 'Show graph', @links[index], :target => '_blank'%></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Client', new_client_path %>
+<br />
+<br />
+<p>
+  <b>Instrukcja dodawania nowego klienta</b><br />
+  1. Po otrzymaniu zlecenia via DP na uruchomienie naliczania opłat
+naliczanych metodą 95 percentyla najsamprzód dodajemy wykres w cacti:<br />
+1.1. Console > devices > wyszukujemy urządzenie, pod które jest
+podłączona usługa.<br />
+1.2. Wchodzimy w link urządzenia.<br />
+1.3. Klikamy Create Graphs for this Host<br />
+1.4. Wyszukujemy portu klienta i zaznaczamy ptaszka po czym w liście
+rozwijanej na dole wybieramy
+"In/Out with Total Bandwidth (Combined In and Out) (64-bit Counters)"
+Klikamy Create.<br />
+1.5. Przechodzimy poziom wyżej i klikamy "Graph List"<br />
+1.6. Wyszykujemy nasz wykres z Template<br />
+"Interface - Traffic (bits/sec, 95th Percentile)"
+1.7. Zaznaczamy ptaszka i z listy wybieramy:<br />
+"Place on a Tree (Klienci biznesowi FO).
+1.8. Klikamy GO/yes.<br />
+2. Wchodzimy w zakładkę graphs> Klienci biznesowi FO.<br />
+2.1. Odszukujemy nasz wykres, klikamy w niego, wybieramy "Monthly" i
+klikamy lupe (zoom). Z paska adresu odczytujemy wartości local_graph_id
+i rra_id.<br />
+3. Aby dodać klienta do programu percentyl95 klikamy: "New Client"<br />
+3.1. Uzupełniamy "Nazwa klienta, adres, id usługi" wg danych z DP<br />
+3.2. Uzupełniamy commitment wg. danych z DP.<br />
+3.3. Uzupełniamy local_graph_id i rra_id wg. danych z CACTI.<br />
+3.4 Tworzymy klienta i upewniamy się, czy ładuje się poprawny wykres.<br />
+</p>
+<br />
+<br />
+<p>
+  Program stworzony przez K.Kozłowskiego<br />
+  2012
+</p>
+
+<br />
+<br />
+<Font COLOR="white"> Ze specjalną dedykacją dla TL.<br/>
+  Żeby wszystkim nam żyło się lepiej! :)

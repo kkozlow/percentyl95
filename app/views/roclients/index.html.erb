@@ -1,0 +1,61 @@
+<h1>Lista klientów liczonych metodą 95 percentyla</h1>
+<h2>Okres rozliczeniowy:  <%=@date.strftime("%B")%></h2>
+<p>
+<%= form_tag :controller => 'change_month', :action => 'create', :method => 'post' do %>
+  <%= select_month(@date) %>
+  <%= select_year(@date, :start_year => 2010, :end_year => 2030) %>
+  <%= submit_tag "Przelicz" %>
+    <% end %>
+</p>
+<% if @future == true %>
+  <h2><center>
+    WOW!    We are in the future!<br/>
+    <%= tag(:img, { :src => "/assets/future.jpeg" }, false) %>
+  </center></h2>
+<% end %>
+<table>
+  <tr>
+    <th style="padding-right:50px">Nazwa klienta, adres, id usługi</th>
+    <th style="padding-right:10px">Commitment [Mbps]</th>
+    <th></th>
+  </tr>
+
+<% @clients.each_with_index do |client, index| %>
+  <tr>
+    <td style="padding-right:50px"><%= client.name %></td>
+    <td><%= client.commitment %></td>
+    <td><%=link_to 'Odczytaj 95 percentyl', @links[index], :target => '_blank'%></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<br />
+<p>
+  <b>Instrukcja</b><br />
+  1. Wybieramy interesujący nas okres rozliczeniowy (domyślnie program podaje ostatni miesiąc). <br />
+  2. Klikamy Przelicz (w przypadku domyślnych ustawień można pominąć ten krok).<br />
+  3. Klikamy Odczytaj 95 percentyl dla konkretnego klienta.<br />
+  4. Z wykresu odczytujemy wartość całkowitego ruchu liczonego w
+  95percentylu z prawego dolnego rogu w nawiasach.<br />
+  5. Od tej wartości odejmujemy wartość Commitment [Mbps] i uzyskujemy
+  interesującą nas liczbę Mbps, o którą klient przekroczył commitment.
+  Na tej podstawie i na podstawie danych z umowy dokonuje się wyliczenia
+  kwoty, jaką zostanie obciążony klient.<br />
+  <br />
+  <b>Definicje:</b><br />
+  commitment - wartość podawana w Mbps, odpowiada wirtualnej granicy, do
+  której klient płaci opłatę stałą. Po przekroczeniu tej granicy naliczana
+  jest opłata zmienna od wartości w Mbps 95 percentyl, o którą klient
+  przekroczył commitment.
+  </p>
+  <br />
+  <br />
+<p>
+  Program stworzony przez K.Kozłowskiego<br />
+  2012
+</p>
+
+<br />
+<br />
+<Font COLOR="white"> Ze specjalną dedykacją dla TL.<br/>
+  Żeby wszystkim nam żyło się lepiej! :)
