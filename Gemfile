@@ -21,8 +21,8 @@ end
 
 gem 'jquery-rails'
 
-#gem 'authlogic'
-gem 'authlogic', :git => 'git://github.com/binarylogic/authlogic.git', :ref => '0297e1c005c626c1e37b'
+gem 'authlogic'
+#gem 'authlogic', :git => 'git://github.com/binarylogic/authlogic.git', :ref => '0297e1c005c626c1e37b'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
